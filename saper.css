@@ -2,7 +2,7 @@
     font-family: Arial;
 }
 td{
-    background-color: ghostwhite;
+    background-color: green;
     color:red;
     text-align: center;
     border-bottom: 1px solid black;
@@ -14,10 +14,17 @@ td:first-child{
     border-left:0px;
 }
 td:hover{
-    transition: 1s
+    background-color: darkgoldenrod;
 }
 table{
     border-collapse: collapse;
     border: 3px solid black;
 
+}
+#block{
+    border-collapse: collapse;
+    border: 3px solid black;
+}
+button{
+    background-color: yellowgreen;
 }

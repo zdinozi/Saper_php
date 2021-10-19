@@ -9,6 +9,7 @@
     Podaj ilość bomb: <input type="number" name="bomby"><br/>
     <input type="submit" value="Stwórz">
 </form>
+<p id="wynik"></p>
 
 
 </body>
@@ -60,16 +61,31 @@ class Plansza
                 $plansza[$randx][$randy]='*';
             }
         }
+        $m=0;
         echo '<table>';
         for($i=0 ; $i<$this->x ; $i++) {
             echo '<tr>';
             for ($j = 0; $j < $this->y; $j++) {
-                echo '<td>'.$plansza[$i][$j].'</td>';
+                echo '<td><button id="'.$m.'" onclick="sprawdz('.$m.')" value="'.$plansza[$i][$j].'">'.$plansza[$i][$j].'</button></td>';
+                $m++;
             }
             echo '</tr>';
         }
-        echo '<table/>';
+        echo '</table>';
     }
+//    public function czy_bomba($l)
+//    {
+//        if($l=='*')
+//            {
+//                $g='bomba';
+//                return $g;
+//            }
+//        else{
+//        $g='pole';
+//        return $g;
+//        }
+//
+//    }
 
 
 }
@@ -79,4 +95,22 @@ $xy->build();
 
 
 
-?></html>
+?>
+<script>
+    function sprawdz(l)
+    {
+
+        var d=document.getElementById(l).value;
+        if(d=='*')
+        {
+            document.getElementById('wynik').innerHTML='Trafiłeś Bombe! Koniec gry.';
+        }
+        else{
+            document.getElementById(l).innerHTML='p';
+        }
+
+
+    }
+
+</script>
+</html>
