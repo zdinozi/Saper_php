@@ -7,8 +7,8 @@ td{
     text-align: center;
     border-bottom: 1px solid black;
     border-left:1px solid black;
-    height: 15px;
-    width: 15px;
+    height: 25px;
+    width: 25px;
 }
 td:first-child{
     border-left:0px;
@@ -27,4 +27,27 @@ table{
 }
 button{
     background-color: yellowgreen;
+    width: 21.42;
+    height: 21.43;
+}
+button:hover{
+    background-color: yellow;
+}
+#stronka{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: grey;
+    padding: 60px;
+    margin-top:30px;
+    border-radius: 20%;
+}
+#gra{
+    display: block;
+    width: 100%;
+}
+#formy{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
 }
