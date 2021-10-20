@@ -33,32 +33,32 @@
             $this->bomby=$bomby;
 
         }
-//        function czy_bomba($pole)
-//        {
-//            l=0;
-//            if($pole=)
-//
-//        }
+        //        function czy_bomba($pole)
+        //        {
+        //            l=0;
+        //            if($pole=)
+        //
+        //        }
         function build()
         {
-//            Tablica mieszczaca pole do gry
+            //            Tablica mieszczaca pole do gry
             $plansza=array(
                     array($this->x),
                     array($this->y)
             );
-//            Zapisanie wszystkich pól jako '?'
+            //            Zapisanie wszystkich pól jako '?'
             for($i=0 ; $i<$this->x ; $i++) {
                 for ($j = 0; $j < $this->y; $j++) {
                     $plansza[$i][$j] = '?';
                 }
             }
-//            Losowe przypisanie polom bomb
+            //            Losowe przypisanie polom bomb
+            echo $this->bomby;
             for($c=0 ; $c<$this->bomby ; $c++)
             {
                 $randx=rand(0, ($this->x)-1);
                 $randy=rand(0, ($this->y)-1);
-                if($plansza[$randx][$randy]=='*')
-                {
+                if($plansza[$randx][$randy]=='*') {
                     while($plansza[$randx][$randy]=='*')
                     {
                         $randx=rand(0, ($this->x)-1);
@@ -71,108 +71,96 @@
                     $plansza[$randx][$randy]='*';
                 }
             }
-//            Przypisanie polom wartosci w zaleznosci od ulozenia bomb
+            //            Przypisanie polom wartosci w zaleznosci od ulozenia bomb
             for($i=0 ; $i<$this->x ; $i++) {
+                echo '<br>';
                 for ($j = 0; $j < $this->y; $j++) {
-                    if($i==0 && $j==0)
-                    {
-                        $c=0;
-                        if($plansza[$i+1][$j]=='*')
-                        {
-                            $c++;
-                        }
-                        if($plansza[$i][$j+1]=='*'){
-                            $c++;
-                        }
-                        if($plansza[$i+1][$j+1]=='*')
-                        {
-                            $c++;
-                        }
-                        if($c!=0)
-                        {
-                            $plansza[$i][$j]=$c;
-                        }
-                    }
-                    else{
-                        $c=0;
-                        if(empty($plansza[$i-1][$j-1])!=1 && $plansza[$i-1][$j-1]=='*')
-                        {
-                            $c++;
-                        }
-                        if(empty($plansza[$i-1][$j])!=1 && $plansza[$i-1][$j]=='*')
-                        {
-                            $c++;
-                        }
-                        if(empty($plansza[$i-1][$j+1])!=1 && $plansza[$i-1][$j+1]=='*')
-                        {
-                            $c++;
-                        }
-                        if(empty($plansza[$i][$j-1])!=1 && $plansza[$i][$j-1]=='*')
-                        {
-                            $c++;
-                        }
-                        if(empty($plansza[$i][$j+1])!=1 && $plansza[$i][$j+1]=='*')
-                        {
-                            $c++;
-                        }
-                        if(empty($plansza[$i+1][$j-1])!=1 && $plansza[$i+1][$j-1]=='*')
-                        {
-                            $c++;
-                        }
-                        if(empty($plansza[$i+1][$j])!=1 && $plansza[$i+1][$j]=='*')
-                        {
-                            $c++;
-                        }
-                        if(empty($plansza[$i+1][$j+1])!=1 && $plansza[$i+1][$j+1]=='*')
-                        {
-                            $c++;
-                        }
-                        if($c!=0)
-                        {
-                            $plansza[$i][$j]=$c;
+                    if ($plansza[$i][$j] != '*') {
+                        if ($i == 0 && $j == 0) {
+                            $c = 0;
+                            if ($plansza[$i + 1][$j] == '*') {
+                                $c++;
+                            }
+                            if ($plansza[$i][$j + 1] == '*') {
+                                $c++;
+                            }
+                            if ($plansza[$i + 1][$j + 1] == '*') {
+                                $c++;
+                            }
+                            if ($c != 0) {
+                                $plansza[$i][$j] = $c;
+                            }
+                        } else {
+                            $c = 0;
+                            if (empty($plansza[$i - 1][$j - 1]) != 1 && $plansza[$i - 1][$j - 1] == '*') {
+                                $c++;
+                            }
+                            if (empty($plansza[$i - 1][$j]) != 1 && $plansza[$i - 1][$j] == '*') {
+                                $c++;
+                            }
+                            if (empty($plansza[$i - 1][$j + 1]) != 1 && $plansza[$i - 1][$j + 1] == '*') {
+                                $c++;
+                            }
+                            if (empty($plansza[$i][$j - 1]) != 1 && $plansza[$i][$j - 1] == '*') {
+                                $c++;
+                            }
+                            if (empty($plansza[$i][$j + 1]) != 1 && $plansza[$i][$j + 1] == '*') {
+                                $c++;
+                            }
+                            if (empty($plansza[$i + 1][$j - 1]) != 1 && $plansza[$i + 1][$j - 1] == '*') {
+                                $c++;
+                            }
+                            if (empty($plansza[$i + 1][$j]) != 1 && $plansza[$i + 1][$j] == '*') {
+                                $c++;
+                            }
+                            if (empty($plansza[$i + 1][$j + 1]) != 1 && $plansza[$i + 1][$j + 1] == '*') {
+                                $c++;
+                            }
+                            if ($c != 0) {
+                                $plansza[$i][$j] = $c;
+                            }
                         }
                     }
+                    echo $plansza[$i][$j];
+}
 
-
-
-//                    $c=0;
-//                    if($i==0 && $j==0)
-//                    {
-//                        if($plansza([$i]+1)[$j]=='*')
-//                        {
-//                            echo $plansza([$i]+1)[$j];
-//                            $c++;
-//                        }
-//                        if($plansza([$i]+1)([$j]+1)=='*')
-//                        {
-//                            $c++;
-//                        }
-//                        if($plansza[$i]([$j+1])=='*')
-//                        {
-//                            $c++;
-//                        }
-//                    }
-//                    if($i==0 && $j>0 && $j<($this->y)-1){
-//                        echo 'szyszki';
-//
-//                    }
-//                    if($i>0&& $i<($this->x)-1 && $j==0){
-//                        echo 'szyszki';
-//
-//                    }
-//                    if($i>0 && $i<($this->x)-1 && $j>0 && $j<($this->y)-1)
-//                    {
-//                        echo 'szyszki';
-//
-//                    }
-//                    if($c!=0)
-//                    {
-//                        $plansza[i][j]=$c;
-//                    }
+                    //                    $c=0;
+                    //                    if($i==0 && $j==0)
+                    //                    {
+                    //                        if($plansza([$i]+1)[$j]=='*')
+                    //                        {
+                    //                            echo $plansza([$i]+1)[$j];
+                    //                            $c++;
+                    //                        }
+                    //                        if($plansza([$i]+1)([$j]+1)=='*')
+                    //                        {
+                    //                            $c++;
+                    //                        }
+                    //                        if($plansza[$i]([$j+1])=='*')
+                    //                        {
+                    //                            $c++;
+                    //                        }
+                    //                    }
+                    //                    if($i==0 && $j>0 && $j<($this->y)-1){
+                    //                        echo 'szyszki';
+                    //
+                    //                    }
+                    //                    if($i>0&& $i<($this->x)-1 && $j==0){
+                    //                        echo 'szyszki';
+                    //
+                    //                    }
+                    //                    if($i>0 && $i<($this->x)-1 && $j>0 && $j<($this->y)-1)
+                    //                    {
+                    //                        echo 'szyszki';
+                    //
+                    //                    }
+                    //                    if($c!=0)
+                    //                    {
+                    //                        $plansza[i][j]=$c;
+                    //                    }
 
 
                 }
-            }
 
             $m=0;
             echo '<center><div id="gra"><table id="plansza" class="gra">';
@@ -188,7 +176,7 @@
         }
     }
 
-    $xy=new Plansza($_GET['x'],$_GET['y'],$_GET['bomby']);
+    $xy = new Plansza($_GET['x'], $_GET['y'], $_GET['bomby']);
     $xy->build();
 
     ?>
@@ -196,12 +184,14 @@
 </div>
 </body>
     <script>
+        var click=0;
         function sprawdz(l)
         {
+            click++;
             var d=document.getElementById(l).value;
             if(d=='*')
             {
-                document.getElementById('wynik').innerHTML='Trafiłeś Bombe! Koniec gry.';
+                document.getElementById('wynik').innerHTML='Trafiłeś Bombe! Koniec gry. Ruchy: '+click;
                 document.getElementById(l).innerHTML='*';
                 // document.getElementById('plansza').style.display='none';
                 var x = document.getElementById("gra");
@@ -229,6 +219,7 @@
 
 
         }
+
 
     </script>
 </html>
