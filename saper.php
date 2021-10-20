@@ -59,7 +59,6 @@
                 }
             }
             //            Losowe przypisanie polom bomb
-            echo $this->bomby;
             for($c=0 ; $c<$this->bomby ; $c++)
             {
                 $randx=rand(0, ($this->x)-1);
@@ -79,7 +78,6 @@
             }
             //            Przypisanie polom wartosci w zaleznosci od ulozenia bomb
             for($i=0 ; $i<$this->x ; $i++) {
-                echo '<br>';
                 for ($j = 0; $j < $this->y; $j++) {
                     if ($plansza[$i][$j] != '*') {
                         if ($i == 0 && $j == 0) {
@@ -127,7 +125,6 @@
                             }
                         }
                     }
-                    echo $plansza[$i][$j];
             }
                 }
 
@@ -164,6 +161,19 @@
             if(ruchy==(x*y)-bomby)
             {
                 document.getElementById('wynik').innerHTML='Udało się wygrałeś! Ruchy: '+ruchy;
+                var ilosc=(x*y)-1;
+                for (i = 0; i <= ilosc; i++) {
+                    if(document.getElementById(i+'h').value=='?')
+                    {
+                    komentarz=' ';
+                    document.getElementById(i + 'm').innerHTML = komentarz;
+                    }
+                    else
+                    {
+                        document.getElementById(i + 'm').innerHTML = document.getElementById(i + 'h').value;
+                    }
+
+                }
                 }
             else
             {
@@ -187,8 +197,16 @@
                 var ilosc=(x*y)-1;
                 var i;
                 for (i = 0; i <= ilosc; i++) {
-                    document.getElementById(i).style.display = "none";
-                    document.getElementById(i+'m').innerHTML=document.getElementById(i+'h').value;
+                    // document.getElementById(i + 'm').innerHTML = document.getElementById(i + 'h').value;
+                    if(document.getElementById(i+'h').value=='?')
+                    {
+                        komentarz=' ';
+                        document.getElementById(i + 'm').innerHTML = komentarz;
+                    }
+                    else
+                    {
+                        document.getElementById(i + 'm').innerHTML = document.getElementById(i + 'h').value;
+                    }
                 }
             }
             else {
@@ -198,7 +216,6 @@
                 {
                     document.getElementById(l).style.display='none';
                     document.getElementById(l+'m').innerHTML=document.getElementById(l).value;
-                    // document.getElementById(l).innerHTML = document.getElementById(l).value;
                 }
                 else{
                     document.getElementById(l).style.display='none';
