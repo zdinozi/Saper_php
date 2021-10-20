@@ -26,6 +26,7 @@ table{
     border: 3px solid black;
 }
 button{
+    display:block;
     background-color: yellowgreen;
     width: 21.42;
     height: 21.43;
@@ -40,7 +41,7 @@ button:hover{
     background-color: grey;
     padding: 60px;
     margin-top:30px;
-    border-radius: 20%;
+    border-radius: 5%;
 }
 #gra{
     display: block;

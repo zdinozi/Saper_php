@@ -46,6 +46,12 @@
                     array($this->x),
                     array($this->y)
             );
+
+//            Zmienna x,y,bomby w input hiddenie aby przeslac te wartosci do js
+            echo '<input type="hidden" value="'.$this->x.'" id="xhidden">';
+            echo '<input type="hidden" value="'.$this->y.'" id="yhidden">';
+            echo '<input type="hidden" value="'.$this->bomby.'" id="bombyhidden">';
+
             //            Zapisanie wszystkich pól jako '?'
             for($i=0 ; $i<$this->x ; $i++) {
                 for ($j = 0; $j < $this->y; $j++) {
@@ -122,44 +128,7 @@
                         }
                     }
                     echo $plansza[$i][$j];
-}
-
-                    //                    $c=0;
-                    //                    if($i==0 && $j==0)
-                    //                    {
-                    //                        if($plansza([$i]+1)[$j]=='*')
-                    //                        {
-                    //                            echo $plansza([$i]+1)[$j];
-                    //                            $c++;
-                    //                        }
-                    //                        if($plansza([$i]+1)([$j]+1)=='*')
-                    //                        {
-                    //                            $c++;
-                    //                        }
-                    //                        if($plansza[$i]([$j+1])=='*')
-                    //                        {
-                    //                            $c++;
-                    //                        }
-                    //                    }
-                    //                    if($i==0 && $j>0 && $j<($this->y)-1){
-                    //                        echo 'szyszki';
-                    //
-                    //                    }
-                    //                    if($i>0&& $i<($this->x)-1 && $j==0){
-                    //                        echo 'szyszki';
-                    //
-                    //                    }
-                    //                    if($i>0 && $i<($this->x)-1 && $j>0 && $j<($this->y)-1)
-                    //                    {
-                    //                        echo 'szyszki';
-                    //
-                    //                    }
-                    //                    if($c!=0)
-                    //                    {
-                    //                        $plansza[i][j]=$c;
-                    //                    }
-
-
+            }
                 }
 
             $m=0;
@@ -167,7 +136,7 @@
             for($i=0 ; $i<$this->x ; $i++) {
                 echo '<tr class="gra">';
                 for ($j = 0; $j < $this->y; $j++) {
-                    echo '<td class="ddd gra"><button class="td" id="'.$m.'" onclick="sprawdz('.$m.')" value="'.$plansza[$i][$j].'">'.''.'</button></td>';
+                    echo '<td class="ddd gra"><input type="hidden" value="'.$plansza[$i][$j].'" id="'.$m.'h"><p id="'.$m.'m" value="'.$plansza[$i][$j].'"><button class="td" id="'.$m.'" onclick="sprawdz('.$m.')" value="'.$plansza[$i][$j].'">'.''.'</button></p></td>';
                     $m++;
                 }
                 echo '</tr>';
@@ -185,36 +154,57 @@
 </body>
     <script>
         var click=0;
+        function czy_koniec(ruchy)
+        {
+            // pobranie wartosci gry
+            x=document.getElementById('xhidden').value;
+            y=document.getElementById('yhidden').value;
+            bomby=document.getElementById('bombyhidden').value;
+            // sprawdzenie czy warunek zwycieztwa zostal spelniony
+            if(ruchy==(x*y)-bomby)
+            {
+                document.getElementById('wynik').innerHTML='Udało się wygrałeś! Ruchy: '+ruchy;
+                }
+            else
+            {
+                document.getElementById('wynik').innerHTML='Ruch: '+ruchy;
+            }
+
+        }
         function sprawdz(l)
         {
-            click++;
+            // pobranie id wcisnietego elementu
             var d=document.getElementById(l).value;
+            // jezeli wcisniety element jest *, koniec gry
             if(d=='*')
             {
-                document.getElementById('wynik').innerHTML='Trafiłeś Bombe! Koniec gry. Ruchy: '+click;
-                document.getElementById(l).innerHTML='*';
-                // document.getElementById('plansza').style.display='none';
-                var x = document.getElementById("gra");
-                var y = x.getElementsByClassName("td");
+                // wypisanie ilosci punktow
+                document.getElementById('wynik').innerHTML='Trafiłeś Bombe! Koniec gry. Ilość udanych ruchów: '+click;
+
+
+                x=document.getElementById('xhidden').value;
+                y=document.getElementById('yhidden').value;
+                var ilosc=(x*y)-1;
                 var i;
-                for (i = 0; i < y.length; i++) {
-                     document.getElementsByClassName('td')[i].style.display='none';
+                for (i = 0; i <= ilosc; i++) {
+                    document.getElementById(i).style.display = "none";
+                    document.getElementById(i+'m').innerHTML=document.getElementById(i+'h').value;
                 }
-                document.getElementById(l).style.display='block';
-                document.getElementsByClassName('ddd')[l].innerHTML='*';
-                // document.getElementsByClassName("td").attribute("onclick","click()");
-                // document.getElementById('gra').style.display='none';
             }
             else {
+                click++;
+
                 if (document.getElementById(l).value != '?')
                 {
-                    document.getElementById(l).innerHTML = document.getElementById(l).value;
+                    document.getElementById(l).style.display='none';
+                    document.getElementById(l+'m').innerHTML=document.getElementById(l).value;
+                    // document.getElementById(l).innerHTML = document.getElementById(l).value;
                 }
                 else{
                     document.getElementById(l).style.display='none';
+                    document.getElementById(l+'m').innerHTML=' ';
                 }
-                // document.getElementById(l).innerHTML='x';
-                // document.getElementById(l).style.display='none';
+                czy_koniec(click);
             }
 
 
