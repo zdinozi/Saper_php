@@ -3,150 +3,148 @@
     <link rel="stylesheet" href="saper.css">
 </head>
 <body>
+
 <div id="stronka">
+
+    <h1 style="text-align: center; font-size:70px;">SAPER</h1>
+
     <div id="formy">
     <form method="get" action="">
-        <table class="forma">
-        <tr class="forma">
-            <td class="forma">Podaj szerokość:</td><td class="forma"><input type="number" name="x"></td>
+        <table class="tabela1">
+        <tr class="forma1">
+            <td class="pole">Podaj szerokość:</td><td class="pole"><input type="number" name="x" value="0"></td>
         </tr>
-            <tr class="forma"><td class="forma">Podaj wysokość:</td><td class="forma"><input type="number" name="y"></td><tr/>
-            <tr class="forma"><td class="forma">Podaj ilość bomb:</td><td class="forma"><input type="number" name="bomby"></td><tr/>
-        <tr class="forma"><td class="forma"></td><td class="forma"><input type="submit" value="Stwórz"></td></tr>
+            <tr class="forma1"><td class="pole">Podaj wysokość:</td><td class="pole"><input type="number" name="y" value="0"></td><tr/>
+            <tr class="forma1"><td class="pole">Podaj ilość bomb:</td><td class="pole"><input type="number" name="bomby" value="0"></td><tr/>
+        <tr class="forma1"><td class="pole"></td><td class="pole"><input type="submit" value="Stwórz"></td></tr>
         </table>
     </form>
     </div>
 
 
-    <?php
+<?php
 
 
-    class Plansza
+class Plansza
+{
+    public $x;
+    public $y;
+    public $bomby;
+    function __construct($x,$y,$bomby)
     {
-        public $x;
-        public $y;
-        public $bomby;
-        function __construct($x,$y,$bomby)
-        {
-            $this->x=$x;
-            $this->y=$y;
-            $this->bomby=$bomby;
+        $this->x=$x;
+        $this->y=$y;
+        $this->bomby=$bomby;
+    }
+    function build()
+    {
+        //            Tablica mieszczaca pole do gry
+        $plansza=array(
+                array($this->x),
+                array($this->y)
+        );
 
+        //            Zmienna x,y,bomby w input hiddenie aby przeslac te wartosci do js
+        echo '<input type="hidden" value="'.$this->x.'" id="xhidden">';
+        echo '<input type="hidden" value="'.$this->y.'" id="yhidden">';
+        echo '<input type="hidden" value="'.$this->bomby.'" id="bombyhidden">';
+
+        //            Zapisanie wszystkich pól jako '?'
+        for($i=0 ; $i<$this->x ; $i++) {
+            for ($j = 0; $j < $this->y; $j++) {
+                $plansza[$i][$j] = '?';
+            }
         }
-        //        function czy_bomba($pole)
-        //        {
-        //            l=0;
-        //            if($pole=)
-        //
-        //        }
-        function build()
+        // Losowe przypisanie polom bomb
+        for($c=0 ; $c<$this->bomby ; $c++)
         {
-            //            Tablica mieszczaca pole do gry
-            $plansza=array(
-                    array($this->x),
-                    array($this->y)
-            );
-
-//            Zmienna x,y,bomby w input hiddenie aby przeslac te wartosci do js
-            echo '<input type="hidden" value="'.$this->x.'" id="xhidden">';
-            echo '<input type="hidden" value="'.$this->y.'" id="yhidden">';
-            echo '<input type="hidden" value="'.$this->bomby.'" id="bombyhidden">';
-
-            //            Zapisanie wszystkich pól jako '?'
-            for($i=0 ; $i<$this->x ; $i++) {
-                for ($j = 0; $j < $this->y; $j++) {
-                    $plansza[$i][$j] = '?';
-                }
-            }
-            //            Losowe przypisanie polom bomb
-            for($c=0 ; $c<$this->bomby ; $c++)
-            {
-                $randx=rand(0, ($this->x)-1);
-                $randy=rand(0, ($this->y)-1);
-                if($plansza[$randx][$randy]=='*') {
-                    while($plansza[$randx][$randy]=='*')
-                    {
-                        $randx=rand(0, ($this->x)-1);
-                        $randy=rand(0, ($this->y)-1);
-                    }
-                    $plansza[$randx][$randy]='*';
-                }
-                else
+            $randx=rand(0, ($this->x)-1);
+            $randy=rand(0, ($this->y)-1);
+            if($plansza[$randx][$randy]=='*') {
+                while($plansza[$randx][$randy]=='*')
                 {
-                    $plansza[$randx][$randy]='*';
+                    $randx=rand(0, ($this->x)-1);
+                    $randy=rand(0, ($this->y)-1);
                 }
+                $plansza[$randx][$randy]='*';
             }
-            //            Przypisanie polom wartosci w zaleznosci od ulozenia bomb
-            for($i=0 ; $i<$this->x ; $i++) {
-                for ($j = 0; $j < $this->y; $j++) {
-                    if ($plansza[$i][$j] != '*') {
-                        if ($i == 0 && $j == 0) {
-                            $c = 0;
-                            if ($plansza[$i + 1][$j] == '*') {
-                                $c++;
-                            }
-                            if ($plansza[$i][$j + 1] == '*') {
-                                $c++;
-                            }
-                            if ($plansza[$i + 1][$j + 1] == '*') {
-                                $c++;
-                            }
-                            if ($c != 0) {
-                                $plansza[$i][$j] = $c;
-                            }
-                        } else {
-                            $c = 0;
-                            if (empty($plansza[$i - 1][$j - 1]) != 1 && $plansza[$i - 1][$j - 1] == '*') {
-                                $c++;
-                            }
-                            if (empty($plansza[$i - 1][$j]) != 1 && $plansza[$i - 1][$j] == '*') {
-                                $c++;
-                            }
-                            if (empty($plansza[$i - 1][$j + 1]) != 1 && $plansza[$i - 1][$j + 1] == '*') {
-                                $c++;
-                            }
-                            if (empty($plansza[$i][$j - 1]) != 1 && $plansza[$i][$j - 1] == '*') {
-                                $c++;
-                            }
-                            if (empty($plansza[$i][$j + 1]) != 1 && $plansza[$i][$j + 1] == '*') {
-                                $c++;
-                            }
-                            if (empty($plansza[$i + 1][$j - 1]) != 1 && $plansza[$i + 1][$j - 1] == '*') {
-                                $c++;
-                            }
-                            if (empty($plansza[$i + 1][$j]) != 1 && $plansza[$i + 1][$j] == '*') {
-                                $c++;
-                            }
-                            if (empty($plansza[$i + 1][$j + 1]) != 1 && $plansza[$i + 1][$j + 1] == '*') {
-                                $c++;
-                            }
-                            if ($c != 0) {
-                                $plansza[$i][$j] = $c;
-                            }
+            else
+            {
+                $plansza[$randx][$randy]='*';
+            }
+        }
+        // Przypisanie polom wartosci w zaleznosci od ulozenia bomb
+        for($i=0 ; $i<$this->x ; $i++) {
+            for ($j = 0; $j < $this->y; $j++) {
+                if ($plansza[$i][$j] != '*') {
+                    if ($i == 0 && $j == 0) {
+                        $c = 0;
+                        if ($plansza[$i + 1][$j] == '*') {
+                            $c++;
+                        }
+                        if ($plansza[$i][$j + 1] == '*') {
+                            $c++;
+                        }
+                        if ($plansza[$i + 1][$j + 1] == '*') {
+                            $c++;
+                        }
+                        if ($c != 0) {
+                            $plansza[$i][$j] = $c;
+                        }
+                    } else {
+                        $c = 0;
+                        if (empty($plansza[$i - 1][$j - 1]) != 1 && $plansza[$i - 1][$j - 1] == '*') {
+                            $c++;
+                        }
+                        if (empty($plansza[$i - 1][$j]) != 1 && $plansza[$i - 1][$j] == '*') {
+                            $c++;
+                        }
+                        if (empty($plansza[$i - 1][$j + 1]) != 1 && $plansza[$i - 1][$j + 1] == '*') {
+                            $c++;
+                        }
+                        if (empty($plansza[$i][$j - 1]) != 1 && $plansza[$i][$j - 1] == '*') {
+                            $c++;
+                        }
+                        if (empty($plansza[$i][$j + 1]) != 1 && $plansza[$i][$j + 1] == '*') {
+                            $c++;
+                        }
+                        if (empty($plansza[$i + 1][$j - 1]) != 1 && $plansza[$i + 1][$j - 1] == '*') {
+                            $c++;
+                        }
+                        if (empty($plansza[$i + 1][$j]) != 1 && $plansza[$i + 1][$j] == '*') {
+                            $c++;
+                        }
+                        if (empty($plansza[$i + 1][$j + 1]) != 1 && $plansza[$i + 1][$j + 1] == '*') {
+                            $c++;
+                        }
+                        if ($c != 0) {
+                            $plansza[$i][$j] = $c;
                         }
                     }
-            }
                 }
-
-            $m=0;
-            echo '<center><div id="gra"><table id="plansza" class="gra">';
-            for($i=0 ; $i<$this->x ; $i++) {
-                echo '<tr class="gra">';
-                for ($j = 0; $j < $this->y; $j++) {
-                    echo '<td class="ddd gra"><input type="hidden" value="'.$plansza[$i][$j].'" id="'.$m.'h"><p id="'.$m.'m" value="'.$plansza[$i][$j].'"><button class="td" id="'.$m.'" onclick="sprawdz('.$m.')" value="'.$plansza[$i][$j].'">'.''.'</button></p></td>';
-                    $m++;
-                }
-                echo '</tr>';
             }
-            echo '</table></div></center>';
         }
+
+        $m=0;
+        echo '<center><div id="gra"><table id="table_gra" class="gra">';
+        for($i=0 ; $i<$this->x ; $i++) {
+            echo '<tr class="rzad_gra">';
+            for ($j = 0; $j < $this->y; $j++) {
+                echo '<td class="pole_gra"><input type="hidden" value="'.$plansza[$i][$j].'" id="'.$m.'h"><p id="'.$m.'m" value="'.$plansza[$i][$j].'"><button class="td" id="'.$m.'" onclick="sprawdz('.$m.')" value="'.$plansza[$i][$j].'">'.''.'</button></p></td>';
+                $m++;
+            }
+            echo '</tr>';
+        }
+        echo '</table></div></center>';
     }
+}
 
-    $xy = new Plansza($_GET['x'], $_GET['y'], $_GET['bomby']);
-    $xy->build();
+$xy = new Plansza($_GET['x'], $_GET['y'], $_GET['bomby']);
+$xy->build();
 
-    ?>
+?>
     <p id="wynik" style="text-align: center"></p>
+    <p id="wynik1" style="text-align: center"></p>
 </div>
 </body>
     <script>
@@ -178,6 +176,7 @@
             else
             {
                 document.getElementById('wynik').innerHTML='Ruch: '+ruchy;
+                document.getElementById('wynik1').innerHTML='Ilość bomb na mapie: '+bomby;
             }
 
         }
@@ -190,6 +189,7 @@
             {
                 // wypisanie ilosci punktow
                 document.getElementById('wynik').innerHTML='Trafiłeś Bombe! Koniec gry. Ilość udanych ruchów: '+click;
+                document.getElementById('wynik1').innerHTML='';
 
 
                 x=document.getElementById('xhidden').value;
