@@ -25,10 +25,10 @@
     <form method="get" action="">
         <table class="tabela1">
         <tr class="forma1">
-            <td class="pole">Podaj wysokość:</td><td class="pole"><input type="number" class="h" name="x" value="0"></td>
+            <td class="pole">Podaj wysokość:</td><td class="pole"><input type="number" class="h" name="x"></td>
         </tr>
-            <tr class="forma1"><td class="pole">Podaj szerokość:</td><td class="pole"><input type="number" class='h' name="y" value="0"></td><tr/>
-            <tr class="forma1"><td class="pole">Podaj ilość bomb:</td><td class="pole"><input type="number" class='h' name="bomby" value="0"></td><tr/>
+            <tr class="forma1"><td class="pole">Podaj szerokość:</td><td class="pole"><input type="number" class='h' name="y"></td><tr/>
+            <tr class="forma1"><td class="pole">Podaj ilość bomb:</td><td class="pole"><input type="number" class='h' name="bomby"></td><tr/>
         <tr class="forma1"><td class="pole"></td><td class="pole"><input type="submit" value="Stwórz" id="saper-submit"></td></tr>
         </table>
     </form></div></div>
