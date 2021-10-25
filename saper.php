@@ -4,22 +4,34 @@
 </head>
 <body>
 
-<div id="stronka">
-
-    <h1 style="text-align: center; font-size:70px;">SAPER</h1>
-
+    <header>
+        <h1 style="text-align: center; font-size:70px;">SAPER</h1>
+    </header>
+    <div id="row">
+    <div id="saper-info">
+        <input type="button" onclick="pokaz()" value="Informacje" id="saper-info-btn" style="cursor: pointer;">
+    </div>
+    <div id="saper-text">
+        <p id='info' style="visibility: hidden;">
+        Witaj w kopii gry saper mojej produkcji. Największa możliwa plansza do stworzenia posiada wymiary 50x50.<br/>
+        Dostępne ustawienia orginalnej gry:<br/>
+        * Początkujący – plansza 8×8 pól, 10 min, ryzyko trafienia na minę: 15,625% <a href="saper.php?x=8&y=8&bomby=10"><input type="button" value="Zagraj" style="cursor: pointer;"></a><br/>
+        * Zaawansowany – plansza 16×16 pól, 40 min, ryzyko trafienia na minę: 15,625% <a href="saper.php?x=16&y=16&bomby=40"><input type="button" value="Zagraj" style="cursor: pointer;"></a><br/>
+        * Ekspert – plansza 30×16 pól, 99 min, ryzyko trafienia na minę: 20,625% <a href="saper.php?x=16&y=30&bomby=99"><input type="button" value="Zagraj" style="cursor: pointer;"></a>
+        </p>
+    </div>
+<br/>
     <div id="formy">
     <form method="get" action="">
         <table class="tabela1">
         <tr class="forma1">
-            <td class="pole">Podaj szerokość:</td><td class="pole"><input type="number" name="x" value="0"></td>
+            <td class="pole">Podaj wysokość:</td><td class="pole"><input type="number" class="h" name="x" value="0"></td>
         </tr>
-            <tr class="forma1"><td class="pole">Podaj wysokość:</td><td class="pole"><input type="number" name="y" value="0"></td><tr/>
-            <tr class="forma1"><td class="pole">Podaj ilość bomb:</td><td class="pole"><input type="number" name="bomby" value="0"></td><tr/>
-        <tr class="forma1"><td class="pole"></td><td class="pole"><input type="submit" value="Stwórz"></td></tr>
+            <tr class="forma1"><td class="pole">Podaj szerokość:</td><td class="pole"><input type="number" class='h' name="y" value="0"></td><tr/>
+            <tr class="forma1"><td class="pole">Podaj ilość bomb:</td><td class="pole"><input type="number" class='h' name="bomby" value="0"></td><tr/>
+        <tr class="forma1"><td class="pole"></td><td class="pole"><input type="submit" value="Stwórz" id="saper-submit"></td></tr>
         </table>
-    </form>
-    </div>
+    </form></div></div>
 
 
 <?php
@@ -130,27 +142,55 @@ class Plansza
         for($i=0 ; $i<$this->x ; $i++) {
             echo '<tr class="rzad_gra">';
             for ($j = 0; $j < $this->y; $j++) {
-                echo '<td class="pole_gra"><input type="hidden" value="'.$plansza[$i][$j].'" id="'.$m.'h"><p id="'.$m.'m" value="'.$plansza[$i][$j].'"><button class="td" id="'.$m.'" onclick="sprawdz('.$m.')" value="'.$plansza[$i][$j].'">'.''.'</button></p></td>';
+                echo '<td class="pole_gra"><input type="hidden" value="'.$plansza[$i][$j].'" id="'.$m.'h"><p id="'.$m.'m" value="'.$plansza[$i][$j].'"><button class="td" id="'.$m.'" onmousedown="WhichButton(event,'.$m.')" value="'.$plansza[$i][$j].'">'.''.'</button></p></td>';
                 $m++;
             }
             echo '</tr>';
         }
-        echo '</table></div></center>';
+        echo '</table>';
     }
 }
 
-$xy = new Plansza($_GET['x'], $_GET['y'], $_GET['bomby']);
-$xy->build();
+if (!empty($_GET['x']) && !empty($_GET['y']) && !empty($_GET['bomby'])) {
+    if($_GET['x']<=50 && $_GET['y']<=50 && $_GET['y']>1 && $_GET['x']>1) {
+        if ($_GET['bomby'] < ($_GET['x'] * $_GET['y'])) {
+                $xy = new Plansza($_GET['x'], $_GET['y'], $_GET['bomby']);
+                $xy->build();
 
-?>
-    <p id="wynik" style="text-align: center"></p>
-    <p id="wynik1" style="text-align: center"></p>
-</div>
+
+        } else {
+            echo '<center>Liczba bomb powinna być mniejsza niż liczba pól.</center>';
+        }
+    }
+    else{
+        echo '<p style="text-align: center;">Plansza musi mieć wymiary z zakresu 2-50.</p>';
+    }
+} else {
+    echo '<p style="text-align: center;">Proszę wpisać dane.</p>';
+    $_GET['x']='0';
+    $_GET['y']='0';
+    $_GET['bomby']='0';
+
+}
+echo '<p style="text-align: center;"><a href="saper.php?x=' . $_GET['x'] . '&y=' . $_GET['y'] . '&bomby=' . $_GET['bomby'] . '" style="text-decoration: none;font-weight: bold; color:#703232;">Zagraj ponownie!</a></p>';
+    ?>
+    <p id="wynik" style="text-align: center">Ruchy: 0</p>
+    <p id="wynik1" style="text-align: center">Ilość bomb na mapie: 0</p>
+    <p id="bombyz" style="text-align: center">Ilość zaznaczonych bomb: 0</p>
+</div></center>
+<footer>
+    <a href="https://github.com/zdinozi" target="_blank"><img src="github-ww.png" style="width: 50px; height: 50px;"></a>&nbsp;&nbsp;
+    <a href="https://www.linkedin.com/in/wiktor-banasiak-672425222/" target="_blank"><img src="linkedin.png" style="width: 50px; height: 50px;"></a>
+
+
+</footer>
 </body>
     <script>
         var click=0;
+        var bombyz=0;
         function czy_koniec(ruchy)
         {
+            javascript:void(document.oncontextmenu=null);
             // pobranie wartosci gry
             x=document.getElementById('xhidden').value;
             y=document.getElementById('yhidden').value;
@@ -225,8 +265,45 @@ $xy->build();
             }
 
 
+
         }
 
+        function WhichButton(event, l) {
+            var k=l;
+            if(event.button==0) {
+                sprawdz(k);
+            }
+            if(event.button==2) {
+                document.addEventListener('contextmenu', event => event.preventDefault());
+                if(document.getElementById(l).innerHTML=='') {
+                    document.getElementById(l).innerHTML = '*';
+                    bombyz++;
+                    document.getElementById('bombyz').innerHTML='Ilość zaznaczonych bomb: '+bombyz;
+                }
+                else if(document.getElementById(l).innerHTML=='*')
+                {
+                    document.getElementById(l).innerHTML='?';
+                    bombyz--;
+                    document.getElementById('bombyz').innerHTML='Ilość zaznaczonych bomb: '+bombyz;
+                }
+                else if(document.getElementById(l).innerHTML=='?')
+                {
+                    document.getElementById(l).innerHTML='';
+                }
+            }
+        }
+        function pokaz()
+        {
+            if(document.getElementById('info').style.visibility=='visible')
+            {
+                d = document.getElementById('info');
+                d.style.visibility = 'hidden';
+            }
+            else {
+                d = document.getElementById('info');
+                d.style.visibility = 'visible';
+            }
+        }
 
     </script>
 </html>

@@ -1,5 +1,9 @@
-.body{
+body{
     font-family: Arial;
+    margin: 0px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 #block{
     border-collapse: collapse;
@@ -26,28 +30,75 @@ button:hover{
     background-color: lightslategray;
     transition: 0.2s;
 }
-#stronka{
-    width: 80%;
-    margin-left: auto;
+header{
+    width: 100%;
+    height: 150px;
+    background-color: #24292f;
+    color: whitesmoke;
+    margin: 0px;
+}
+#row{
+    flex-direction: row-reverse;
+    text-align: center;
+
+}
+#saper-info{
+    position: relative;
     margin-right: auto;
-    background-color: grey;
-    padding: 60px;
-    margin-top:30px;
-    border-radius: 5%;
+    float:left;
+    width: 10%;
+    background-color: #703232;
+    height: 150px;
+}
+#saper-info-btn{
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left:30%;
+}
+#saper-text{
+    width: 90%;
+    float: left;
+    margin-left: auto;
+    background-color: #703232;
+    height: 150px;
+    text-align: center;
+    color:white;
+    font-size: 20px;
 }
 #gra{
-    display: block;
     width: 100%;
 }
 #formy{
-    width: 22%;
+    padding-top: 20px;
+    display: block;
+    margin-top: 10px;
+    width: 20%;
     margin-left: auto;
     margin-right: auto;
-    background-color: whitesmoke;
-    border-radius: 10%;
+    clear:both;
+}
+.h{
+    border: 2px solid #703232;
+}
+#saper-submit{
+    background-color: #703232;
+    color: white;
+    border: 2px solid #703232;
+    padding: 5px;
+    cursor: pointer;
+
 }
 table .forma{
     border: none;
     background-color: ghostwhite;
-
+}
+footer{
+    width: 100%;
+    /*background-color: #071419;*/
+    background-color: #24292f;
+    clear: both;
+    height: 200px;
+    margin-top: auto;
 }
